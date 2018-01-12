@@ -86,7 +86,7 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 
 	@Override
 	public String toString() {
-		return "Gore levo: " + this.goreLevo + ", duzina stranice: " + this.getDuzina();
+		return "Gore levo: " + this.goreLevo + ", duzina stranice: " + this.getDuzina() + ", boja ivice: " + this.getBoja() + ", boja unutrasnjosti: " + this.getBojaUnutrasnjosti();
 	}
 
 	@Override
