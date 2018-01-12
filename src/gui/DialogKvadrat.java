@@ -150,7 +150,7 @@ public class DialogKvadrat extends JDialog {
 		btnDodajKvadrat.setBounds(10, 191, 200, 37);
 		jpMainKvadrat.add(btnDodajKvadrat);
 		
-		if(!dodavanje) {
+		if(!dodavanje) { // nije dodavanje nego brisanje
 			this.setTitle("Obrisi kvadrat");
 			this.btnDodajKvadrat.setText("Obrisi");
 			// postavljanje vrednosti 

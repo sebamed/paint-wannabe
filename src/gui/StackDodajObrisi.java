@@ -23,17 +23,17 @@ import javax.swing.JTextField;
 
 public class StackDodajObrisi extends JFrame {
 
-	public DefaultListModel dfmKvadrat;
+	private DefaultListModel<Kvadrat> dfmKvadrat;
 	private JList listStack;
 	private JTextField tfCurrentCount;
 
 	public StackDodajObrisi() {
-		this.dfmKvadrat = new DefaultListModel();
+		this.dfmKvadrat = new DefaultListModel<Kvadrat>();
 
 		setTitle("Stek - Dodaj/Obrisi");
 		setResizable(false);
 		getContentPane().setLayout(null);
-		this.setSize(681, 379);
+		this.setSize(694, 393);
 
 		JPanel jpMain = new JPanel();
 		jpMain.setBounds(0, 0, 675, 351);
