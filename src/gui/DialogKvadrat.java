@@ -35,6 +35,8 @@ public class DialogKvadrat extends JDialog {
 	public JComboBox cboxBojaIvice;
 	public JComboBox cboxBojaU;
 	public JButton btnDodajKvadrat;
+	
+	public boolean potvrdjenoBrisanje;
 
 	public DialogKvadrat(JFrame parent, String title, boolean modal, boolean dodavanje, Kvadrat poslednjiKvadrat) {
 
@@ -143,6 +145,7 @@ public class DialogKvadrat extends JDialog {
 				if(DialogKvadrat.this.checkForEmptyFields()) {
 					DialogKvadrat.this.noviKvadrat = new Kvadrat(new Tacka(Integer.parseInt(DialogKvadrat.this.tfGoreLevoX.getText()), Integer.parseInt(DialogKvadrat.this.tfGoreLevoY.getText())), Integer.parseInt(DialogKvadrat.this.tfDuzina.getText()), String.valueOf(DialogKvadrat.this.cboxBojaIvice.getSelectedItem()), String.valueOf(DialogKvadrat.this.cboxBojaU.getSelectedItem()));
 					System.out.println(DialogKvadrat.this.noviKvadrat);
+					DialogKvadrat.this.potvrdjenoBrisanje = true;
 					DialogKvadrat.this.dispose();
 				}
 			}
@@ -151,6 +154,7 @@ public class DialogKvadrat extends JDialog {
 		jpMainKvadrat.add(btnDodajKvadrat);
 		
 		if(!dodavanje) { // nije dodavanje nego brisanje
+			DialogKvadrat.this.potvrdjenoBrisanje = false;
 			this.setTitle("Obrisi kvadrat");
 			this.btnDodajKvadrat.setText("Obrisi");
 			// postavljanje vrednosti 

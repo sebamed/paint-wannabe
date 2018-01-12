@@ -61,7 +61,11 @@ public class StackSortiraj extends JFrame{
 				if(StackSortiraj.this.dfmKvadrat.isEmpty()) { // prazna
 					System.out.println("Prazan");
 					JOptionPane.showMessageDialog(StackSortiraj.this, "Stack je prazan, ne mozete sortirati nista!", "Greska", JOptionPane.ERROR_MESSAGE);
-				} else { // nije prazna
+				} else if(StackSortiraj.this.dfmKvadrat.size() == 1) {
+					System.out.println("Samo jedan");
+					JOptionPane.showMessageDialog(StackSortiraj.this, "Stack sadrzi samo jedan kvadrat, ne mozete sortirati jedan kvadrat!", "Greska", JOptionPane.ERROR_MESSAGE);
+				}
+				else { // nije prazna
 					StackSortiraj.this.listSortirani.sort(null);
 					for(int i = 0; i < StackSortiraj.this.listSortirani.size(); i++) {
 						StackSortiraj.this.dfmKvadrat.set(i, StackSortiraj.this.listSortirani.get(i));

@@ -72,9 +72,11 @@ public class StackDodajObrisi extends JFrame {
 				} else {
 					Kvadrat tempK = (Kvadrat) StackDodajObrisi.this.dfmKvadrat.getElementAt(0);
 					DialogKvadrat dlgKvadratObrisi = new DialogKvadrat(StackDodajObrisi.this, "Obrisi kvadrat", true, false, tempK);
-					JOptionPane.showMessageDialog(StackDodajObrisi.this, "Kvadrat koji ce biti obrisan: \n" + tempK, "Brisanje", JOptionPane.INFORMATION_MESSAGE);
-					StackDodajObrisi.this.dfmKvadrat.removeElementAt(0);
-					StackDodajObrisi.this.tfCurrentCount.setText(String.valueOf(StackDodajObrisi.this.dfmKvadrat.size()));
+					if(dlgKvadratObrisi.potvrdjenoBrisanje) {						
+						JOptionPane.showMessageDialog(StackDodajObrisi.this, "Kvadrat koji ce biti obrisan: \n" + tempK, "Brisanje", JOptionPane.INFORMATION_MESSAGE);
+						StackDodajObrisi.this.dfmKvadrat.removeElementAt(0);
+						StackDodajObrisi.this.tfCurrentCount.setText(String.valueOf(StackDodajObrisi.this.dfmKvadrat.size()));
+					}
 				}
 			}
 		});
