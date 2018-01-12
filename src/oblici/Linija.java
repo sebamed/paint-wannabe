@@ -1,5 +1,7 @@
 package oblici;
 
+import java.awt.Graphics;
+
 public class Linija extends Oblik implements Pomerljiv {
 	private Tacka pocetna, krajnja;
 
@@ -11,7 +13,7 @@ public class Linija extends Oblik implements Pomerljiv {
 		this.pocetna = pocetna;
 		this.krajnja = krajnja;
 	}
-	
+
 	public Linija(Tacka pocetna, Tacka krajnja, String boja) {
 		this.pocetna = pocetna;
 		this.krajnja = krajnja;
@@ -39,11 +41,11 @@ public class Linija extends Oblik implements Pomerljiv {
 	}
 
 	public int compareTo(Object druga) {
-		if(druga instanceof Linija) {
+		if (druga instanceof Linija) {
 			Linija drugaLinija = (Linija) druga;
 			return (int) (this.duzina() - drugaLinija.duzina());
-		}else {
-		return 0;
+		} else {
+			return 0;
 		}
 	}
 
@@ -51,10 +53,10 @@ public class Linija extends Oblik implements Pomerljiv {
 		return new Tacka((this.pocetna.getX() + this.krajnja.getX()) / 2,
 				(this.pocetna.getY() + this.krajnja.getY()) / 2);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Pocetna: "  + this.pocetna + ", Krajnja: " + this.krajnja;
+		return "Pocetna: " + this.pocetna + ", Krajnja: " + this.krajnja;
 	}
 
 	@Override
@@ -67,6 +69,36 @@ public class Linija extends Oblik implements Pomerljiv {
 	public void pomeriZa(int x, int y) {
 		this.pocetna.pomeriZa(x, y);
 		this.krajnja.pomeriZa(x, y);
+	}
+
+	@Override
+	public void crtajSe(Graphics g) {
+		g.setColor(pronadjiBoju(this.getBoja()));
+		g.drawLine(this.pocetna.getX(), this.pocetna.getY(), this.krajnja.getX(), this.krajnja.getY());
+
+		if (this.isSelektovan()) {
+			this.selektovan(g);
+		}
+	}
+
+	@Override
+	public void selektovan(Graphics g) {
+		pocetna.selektovan(g);
+		this.sredinaLinije().selektovan(g);
+		krajnja.selektovan(g);
+	}
+
+	@Override
+	public boolean sadrzi(int x, int y) {
+		Tacka klik = new Tacka(x, y);
+		double udaljenostPocetna = this.pocetna.udaljenost(klik);
+		double udaljenostKrajnja = this.krajnja.udaljenost(klik);
+
+		if (udaljenostPocetna + udaljenostKrajnja <= this.duzina() + 0.05) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

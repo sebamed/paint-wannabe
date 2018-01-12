@@ -1,5 +1,8 @@
 package oblici;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Tacka extends Oblik implements Pomerljiv {
 
 	private int x, y;
@@ -7,7 +10,7 @@ public class Tacka extends Oblik implements Pomerljiv {
 	public Tacka() {
 
 	}
-	
+
 	public Tacka(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -77,6 +80,33 @@ public class Tacka extends Oblik implements Pomerljiv {
 			}
 		} else { // nije tacka
 			System.out.println("Tacka - equals: NIJE PROSLEDJENA TACKA");
+			return false;
+		}
+	}
+
+	@Override
+	public void crtajSe(Graphics g) {
+		g.setColor(super.pronadjiBoju(this.getBoja()));
+		g.drawLine(x - 1, y - 1, x + 1, y + 1);
+		g.drawLine(x - 1, y + 1, x + 1, y - 1);
+
+		if (this.isSelektovan()) {
+			this.selektovan(g);
+		}
+	}
+
+	@Override
+	public void selektovan(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.drawRect(x - 3, y - 3, 6, 6);
+	}
+
+	@Override
+	public boolean sadrzi(int x, int y) {
+		Tacka klik = new Tacka(x, y);
+		if (this.udaljenost(klik) <= 3) {
+			return true;
+		} else {
 			return false;
 		}
 	}

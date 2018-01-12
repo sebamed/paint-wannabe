@@ -1,6 +1,8 @@
 package oblici;
 
-public class Kvadrat extends PovrsinskiOblik implements Pomerljiv{
+import java.awt.Graphics;
+
+public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 
 	protected Tacka goreLevo;
 	private int duzina;
@@ -42,13 +44,13 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv{
 	public void setDuzina(int duzina) {
 		this.duzina = duzina;
 	}
-	
+
 	public Linija dijagonala() {
 		Tacka goreDesno = new Tacka(this.goreLevo.getX() + this.duzina, goreLevo.getY());
 		Tacka doleLevo = new Tacka(goreLevo.getX(), this.goreLevo.getY() + this.duzina);
-		
+
 		Linija dijagonala = new Linija(goreDesno, doleLevo);
-		
+
 		return dijagonala;
 	}
 
@@ -69,7 +71,7 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv{
 
 	@Override
 	public double obim() {
-		return 4*this.duzina;
+		return 4 * this.duzina;
 	}
 
 	@Override
@@ -81,10 +83,53 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv{
 	public void pomeriZa(int x, int y) {
 		this.goreLevo.pomeriZa(x, y);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Gore levo: " + this.goreLevo + ", duzina stranice: " + this.getDuzina();
+	}
+
+	@Override
+	public void crtajSe(Graphics g) {
+		g.setColor(pronadjiBoju(this.getBoja()));
+		g.drawRect(this.goreLevo.getX(), this.goreLevo.getY(), this.duzina, this.duzina);
+
+		if (this.isSelektovan()) {
+			this.selektovan(g);
+		}
+	}
+
+	@Override
+	public void popuni(Graphics g) {
+		g.setColor(pronadjiBoju(this.getBojaUnutrasnjosti()));
+		g.fillRect(goreLevo.getX(), goreLevo.getY(), this.duzina, this.duzina);
+	}
+
+	@Override
+	public void selektovan(Graphics g) {
+		goreLevo.selektovan(g);
+		this.dijagonala().getPocetna().selektovan(g);
+		this.dijagonala().getKrajnja().selektovan(g);
+		Tacka doleDesno = new Tacka(goreLevo.getX() + duzina, goreLevo.getY() + duzina);
+		doleDesno.selektovan(g);
+		Linija l1 = new Linija(goreLevo, this.dijagonala().getPocetna());
+		l1.sredinaLinije().selektovan(g);
+		Linija l2 = new Linija(this.dijagonala().getKrajnja(), doleDesno);
+		l2.sredinaLinije().selektovan(g);
+		Linija l3 = new Linija(goreLevo, this.dijagonala().getKrajnja());
+		l3.sredinaLinije().selektovan(g);
+		Linija l4 = new Linija(this.dijagonala().getPocetna(), doleDesno);
+		l4.sredinaLinije().selektovan(g);
+	}
+
+	@Override
+	public boolean sadrzi(int x, int y) {
+		if (this.goreLevo.getX() <= x && x <= this.goreLevo.getX() + this.duzina && this.goreLevo.getY() <= y
+				&& y <= this.goreLevo.getY() + this.duzina) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

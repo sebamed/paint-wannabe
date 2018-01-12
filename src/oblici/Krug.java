@@ -68,4 +68,46 @@ public class Krug extends PovrsinskiOblik implements Pomerljiv {
 		}
 
 	}
+
+	@Override
+	public void crtajSe(Graphics g) {
+		g.setColor(pronadjiBoju(this.getBoja()));
+		g.drawOval(this.centar.getX() - this.poluprecnik, this.centar.getY() - this.poluprecnik, 2 * this.poluprecnik,
+				2 * this.poluprecnik);
+
+		if (this.isSelektovan()) {
+			this.selektovan(g);
+		}
+	}
+
+	@Override
+	public void popuni(Graphics g) {
+		g.setColor(pronadjiBoju(this.getBojaUnutrasnjosti()));
+		g.fillOval(this.centar.getX() - this.poluprecnik, this.centar.getY() - this.poluprecnik, 2 * this.poluprecnik,
+				2 * this.poluprecnik);
+	}
+
+	@Override
+	public void selektovan(Graphics g) {
+		centar.selektovan(g);
+		Tacka levo = new Tacka(centar.getX() - poluprecnik, centar.getY());
+		Tacka desno = new Tacka(centar.getX() + poluprecnik, centar.getY());
+		Tacka gore = new Tacka(centar.getX(), centar.getY() - poluprecnik);
+		Tacka dole = new Tacka(centar.getX(), centar.getY() + poluprecnik);
+
+		levo.selektovan(g);
+		desno.selektovan(g);
+		gore.selektovan(g);
+		dole.selektovan(g);
+	}
+
+	@Override
+	public boolean sadrzi(int x, int y) {
+		Tacka klik = new Tacka(x, y);
+		if (this.centar.udaljenost(klik) <= this.poluprecnik) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
