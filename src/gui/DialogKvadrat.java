@@ -32,8 +32,8 @@ public class DialogKvadrat extends JDialog {
 	public JTextField tfGoreLevoX;
 	public JTextField tfGoreLevoY;
 	public JTextField tfDuzina;
-	public JComboBox cboxBojaIvice;
-	public JComboBox cboxBojaU;
+	public JComboBox<String> cboxBojaIvice;
+	public JComboBox<String> cboxBojaU;
 	public JButton btnDodajKvadrat;
 	
 	public boolean potvrdjenoBrisanje;
@@ -87,6 +87,9 @@ public class DialogKvadrat extends JDialog {
 						DialogKvadrat.this.tooLargeNumberEntered(DialogKvadrat.this.tfGoreLevoX);
 					}
 				} else { // nije unet broj
+					if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_ENTER) { // pritisnut backspace
+						return;
+					}
 					DialogKvadrat.this.notNumberInserted(DialogKvadrat.this.tfGoreLevoX);
 				}
 			}
@@ -105,6 +108,9 @@ public class DialogKvadrat extends JDialog {
 						DialogKvadrat.this.tooLargeNumberEntered(DialogKvadrat.this.tfGoreLevoY);
 					}
 				} else { // nije unet broj
+					if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_ENTER) { // pritisnut backspace
+						return;
+					}
 					DialogKvadrat.this.notNumberInserted(DialogKvadrat.this.tfGoreLevoY);
 				}
 			}
@@ -122,6 +128,9 @@ public class DialogKvadrat extends JDialog {
 						DialogKvadrat.this.tooLargeNumberEntered(DialogKvadrat.this.tfDuzina);
 					}
 				} else { // nije unet broj
+					if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_ENTER) { // pritisnut backspace
+						return;
+					}
 					DialogKvadrat.this.notNumberInserted(DialogKvadrat.this.tfDuzina);
 				}
 			}
@@ -129,12 +138,12 @@ public class DialogKvadrat extends JDialog {
 		tfDuzina.setBounds(121, 85, 89, 25);
 		jpMainKvadrat.add(tfDuzina);
 
-		cboxBojaIvice = new JComboBox();
+		cboxBojaIvice = new JComboBox<String>();
 		cboxBojaIvice.setModel(dcbmIvice);
 		cboxBojaIvice.setBounds(121, 119, 89, 25);
 		jpMainKvadrat.add(cboxBojaIvice);
 
-		cboxBojaU = new JComboBox();
+		cboxBojaU = new JComboBox<String>();
 		cboxBojaU.setModel(dcbmUnutrasnjost);
 		cboxBojaU.setBounds(121, 157, 89, 25);
 		jpMainKvadrat.add(cboxBojaU);
@@ -174,7 +183,7 @@ public class DialogKvadrat extends JDialog {
 		this.setSize(235, 278);
 		this.setLocationRelativeTo(parent);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	private void notNumberInserted(JTextField tf) {
@@ -194,7 +203,12 @@ public class DialogKvadrat extends JDialog {
 			JOptionPane.showMessageDialog(DialogKvadrat.this, "Morate popuniti sva polja!", "Greska",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else { // sve popunjeno
+		} else if(Integer.parseInt(this.tfDuzina.getText()) <= 0) {
+			JOptionPane.showMessageDialog(DialogKvadrat.this, "Duzina stranice ne moze biti manja od 1!", "Greska",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}		
+			else { // sve popunjeno
 			return true;
 		}
 	}

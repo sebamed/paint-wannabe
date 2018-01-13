@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 public class StackDodajObrisi extends JFrame {
 
 	private DefaultListModel<Kvadrat> dfmKvadrat;
-	private JList listStack;
+	private JList<Kvadrat> listStack;
 	private JTextField tfCurrentCount;
 
 	public StackDodajObrisi() {
@@ -44,7 +44,7 @@ public class StackDodajObrisi extends JFrame {
 		scrollPane.setBounds(10, 11, 472, 329);
 		jpMain.add(scrollPane);
 
-		listStack = new JList(this.dfmKvadrat);
+		listStack = new JList<Kvadrat>(this.dfmKvadrat);
 		scrollPane.setViewportView(listStack);
 
 		JButton btnDodajNaStek = new JButton("Dodaj kvadrat na stek");
@@ -96,7 +96,7 @@ public class StackDodajObrisi extends JFrame {
 		jpMain.add(tfCurrentCount);
 		tfCurrentCount.setColumns(10);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
