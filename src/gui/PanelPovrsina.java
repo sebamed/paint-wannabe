@@ -22,9 +22,6 @@ public class PanelPovrsina extends JPanel{
 	public PanelPovrsina() {
 		// svi oblici
 		this.listaOblika = new ArrayList<Oblik>();
-		this.listaOblika.add(new Kvadrat(new Tacka(50, 50), 50, "zuta", "crvena"));
-		this.listaOblika.add(new Krug(new Tacka(250, 250), 50, "bela", "plava"));
-		this.listaOblika.add(new Pravougaonik(new Tacka(150, 150), 50, 70, "zelena", "crvena"));
 		this.setBackground(Color.WHITE);
 		this.setVisible(true);
 	}

@@ -21,6 +21,12 @@ public class Tacka extends Oblik implements Pomerljiv {
 		this.y = y;
 		super.setBoja(boja);
 	}
+	
+	public Tacka(int x, int y, Color color) {
+		this.x = x;
+		this.y = y;
+		super.setColor(color);
+	}
 
 	public int getX() {
 		return x;
@@ -86,7 +92,7 @@ public class Tacka extends Oblik implements Pomerljiv {
 
 	@Override
 	public void crtajSe(Graphics g) {
-		g.setColor(super.pronadjiBoju(this.getBoja()));
+		g.setColor(this.getColor());
 		g.drawLine(x - 1, y - 1, x + 1, y + 1);
 		g.drawLine(x - 1, y + 1, x + 1, y - 1);
 
