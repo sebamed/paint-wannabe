@@ -42,7 +42,7 @@ public class Paint extends JFrame {
 
 	private String selektovaniOblik = "";
 
-	private Oblik trenutnoSelektovan = null;;
+	private Oblik trenutnoSelektovan = null;
 
 	private boolean linijaPrvi = true;
 	private int tempA = 0, tempB = 0;
@@ -62,7 +62,6 @@ public class Paint extends JFrame {
 
 		setBackground(Color.GRAY);
 		JPanel jpMain = new JPanel();
-		jpMain.setBackground(Color.GRAY);
 		getContentPane().add(jpMain, BorderLayout.CENTER);
 		jpMain.setLayout(new BorderLayout(0, 0));
 
@@ -75,7 +74,6 @@ public class Paint extends JFrame {
 		jpOblici.setBorder(new EmptyBorder(10, 10, 10, 10));
 		jpMain.add(jpOblici, BorderLayout.WEST);
 		jpOblici.setLayout(new GridLayout(6, 1, 0, 10));
-		jpOblici.setBackground(Color.CYAN);
 
 		// Dugmici za odabir oblika
 		JToggleButton tbtnStrelica = new JToggleButton();
@@ -99,8 +97,11 @@ public class Paint extends JFrame {
 		tbtnStrelica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
-				Paint.this.selektovaniOblik = ""; // strelica TODO: smisli logiku
-				System.out.println("Strelica");
+				Paint.this.selektovaniOblik = "";
+				Paint.this.trenutnoSelektovan = null;
+				for(Oblik oblik : pnlPovrsina.getListaOblika()) {
+					oblik.setSelektovan(false);
+				}
 			}
 		});
 		jpOblici.add(tbtnStrelica);
@@ -127,7 +128,6 @@ public class Paint extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
 				Paint.this.selektovaniOblik = "Tacka";
-				System.out.println(Paint.this.selektovaniOblik);
 			}
 		});
 		jpOblici.add(tbtnTacka);
@@ -154,7 +154,6 @@ public class Paint extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
 				Paint.this.selektovaniOblik = "Linija";
-				System.out.println(Paint.this.selektovaniOblik);
 			}
 		});
 		jpOblici.add(tbtnLinija);
@@ -181,7 +180,6 @@ public class Paint extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
 				Paint.this.selektovaniOblik = "Kvadrat";
-				System.out.println(Paint.this.selektovaniOblik);
 			}
 		});
 		jpOblici.add(tbtnKvadrat);
@@ -208,7 +206,6 @@ public class Paint extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
 				Paint.this.selektovaniOblik = "Pravougaonik";
-				System.out.println(Paint.this.selektovaniOblik);
 			}
 		});
 		jpOblici.add(tbtnPravougaonik);
@@ -235,7 +232,6 @@ public class Paint extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				Paint.this.toggleSelektovanje(false);
 				Paint.this.selektovaniOblik = "Krug";
-				System.out.println(Paint.this.selektovaniOblik);
 			}
 		});
 		jpOblici.add(tbtnKrug);
@@ -243,7 +239,6 @@ public class Paint extends JFrame {
 		JPanel jpKomande = new JPanel();
 		jpMain.add(jpKomande, BorderLayout.NORTH);
 		jpKomande.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		jpKomande.setBackground(Color.YELLOW);
 
 		ButtonGroup bgKomande = new ButtonGroup();
 
@@ -257,6 +252,82 @@ public class Paint extends JFrame {
 		jpKomande.add(tbtnSelektuj);
 
 		btnEdituj = new JButton("Edituj");
+		btnEdituj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Paint.this.trenutnoSelektovan == null) {
+					JOptionPane.showMessageDialog(Paint.this, "Morate selektovati oblik!", "Greska",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					if (Paint.this.trenutnoSelektovan instanceof Tacka) { // tacka selektovana
+						Tacka temp = (Tacka) Paint.this.trenutnoSelektovan;
+						DialogEditTacka deTacka = new DialogEditTacka(Paint.this, "Edituj tacku", true, temp);
+						if (deTacka.getSacuvano()) {
+							temp.setX(Integer.parseInt(deTacka.tfX.getText()));
+							temp.setY(Integer.parseInt(deTacka.tfY.getText()));
+							temp.setColor(deTacka.btnBoja.getBackground());
+							Paint.this.trenutnoSelektovan = temp;
+							Paint.this.dlmLog.addElement("Editovana tacka u: " + temp);
+							Paint.this.trenutnoSelektovan.setSelektovan(true);
+						}
+					} else if (Paint.this.trenutnoSelektovan instanceof Linija) { // linija selektovana
+						Linija temp = (Linija) Paint.this.trenutnoSelektovan;
+						DialogEditLinija deLinija = new DialogEditLinija(Paint.this, "Edituj liniju", true, temp);
+						if (deLinija.getSacuvano()) {
+							temp.getPocetna().setX(Integer.parseInt(deLinija.tfXPrva.getText()));
+							temp.getPocetna().setY(Integer.parseInt(deLinija.tfYPrva.getText()));
+							temp.getKrajnja().setX(Integer.parseInt(deLinija.tfXDruga.getText()));
+							temp.getKrajnja().setY(Integer.parseInt(deLinija.tfYDruga.getText()));
+							temp.setColor(deLinija.btnBoja.getBackground());
+							Paint.this.trenutnoSelektovan = temp;
+							Paint.this.dlmLog.addElement("Editovana linija u: " + temp);
+							Paint.this.trenutnoSelektovan.setSelektovan(true);
+						}
+
+					} else if (Paint.this.trenutnoSelektovan instanceof Pravougaonik) { // pravougaonik selektovan - prvo pravougaonik pa kvadrat jer je p instanca kvadrata
+						Pravougaonik temp = (Pravougaonik) Paint.this.trenutnoSelektovan;
+						DialogEditPravougaonik dePravougaonik = new DialogEditPravougaonik(Paint.this,
+								"Edituj pravougaonik", true, temp);
+						if (dePravougaonik.getSacuvano()) {
+							temp.getGoreLevo().setX(Integer.parseInt(dePravougaonik.tfX.getText()));
+							temp.getGoreLevo().setY(Integer.parseInt(dePravougaonik.tfY.getText()));
+							temp.setDuzina(Integer.parseInt(dePravougaonik.tfSirina.getText()));
+							temp.setVisina(Integer.parseInt(dePravougaonik.tfVisina.getText()));
+							temp.setColor(dePravougaonik.btnBojaOkvira.getBackground());
+							temp.setColorUnutrasnjosti(dePravougaonik.btnBojaUnutrasnjosti.getBackground());
+							Paint.this.trenutnoSelektovan = temp;
+							Paint.this.dlmLog.addElement("Editovan pravougaonik u: " + temp);
+							Paint.this.trenutnoSelektovan.setSelektovan(true);
+						}
+					} else if (Paint.this.trenutnoSelektovan instanceof Kvadrat) { // kvadrat selektovan
+						Kvadrat temp = (Kvadrat) Paint.this.trenutnoSelektovan;
+						DialogEditKvadrat deKvadrat = new DialogEditKvadrat(Paint.this, "Edituj kvadrat", true, temp);
+						if (deKvadrat.getSacuvano()) {
+							temp.getGoreLevo().setX(Integer.parseInt(deKvadrat.tfX.getText()));
+							temp.getGoreLevo().setY(Integer.parseInt(deKvadrat.tfY.getText()));
+							temp.setDuzina(Integer.parseInt(deKvadrat.tfStranica.getText()));
+							temp.setColor(deKvadrat.btnBojaOkvira.getBackground());
+							temp.setColorUnutrasnjosti(deKvadrat.btnBojaUnutrasnjosti.getBackground());
+							Paint.this.trenutnoSelektovan = temp;
+							Paint.this.dlmLog.addElement("Editovan kvadrat u: " + temp);
+							Paint.this.trenutnoSelektovan.setSelektovan(true);
+						}
+					} else if (Paint.this.trenutnoSelektovan instanceof Krug) { // krug selektovan
+						Krug temp = (Krug) Paint.this.trenutnoSelektovan;
+						DialogEditKrug deKrug = new DialogEditKrug(Paint.this, "Edituj Krug", true, temp);
+						if (deKrug.getSacuvano()) {
+							temp.getCentar().setX(Integer.parseInt(deKrug.tfX.getText()));
+							temp.getCentar().setY(Integer.parseInt(deKrug.tfY.getText()));
+							temp.setPoluprecnik(Integer.parseInt(deKrug.tfRadius.getText()));
+							temp.setColor(deKrug.btnBojaOkvira.getBackground());
+							temp.setColorUnutrasnjosti(deKrug.btnBojaUnutrasnjosti.getBackground());
+							Paint.this.trenutnoSelektovan = temp;
+							Paint.this.dlmLog.addElement("Editovan krug u: " + temp);
+							Paint.this.trenutnoSelektovan.setSelektovan(true);
+						}
+					}
+				}
+			}
+		});
 		btnEdituj.setEnabled(false);
 		btnEdituj.setPreferredSize(new Dimension(70, 40));
 		jpKomande.add(btnEdituj);
@@ -264,11 +335,13 @@ public class Paint extends JFrame {
 		btnObrisi = new JButton("Obrisi");
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Paint.this.selektovaniOblik == null) {
-					JOptionPane.showMessageDialog(Paint.this, "Morate selektovati oblik!", "Greska", JOptionPane.ERROR_MESSAGE);
+				if (Paint.this.trenutnoSelektovan == null) {
+					JOptionPane.showMessageDialog(Paint.this, "Morate selektovati oblik!", "Greska",
+							JOptionPane.ERROR_MESSAGE);
 				} else {
 					pnlPovrsina.obrisiOblik(Paint.this.trenutnoSelektovan);
-					Paint.this.dlmLog.addElement("Obrisan oblik: " + Paint.this.trenutnoSelektovan + " - " + String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13));
+					Paint.this.dlmLog.addElement("Obrisan oblik: " + Paint.this.trenutnoSelektovan + " - "
+							+ String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13));
 					Paint.this.trenutnoSelektovan = null;
 				}
 			}
@@ -278,6 +351,7 @@ public class Paint extends JFrame {
 		jpKomande.add(btnObrisi);
 
 		JPanel jpLog = new JPanel();
+		jpLog.setBorder(new EmptyBorder(10, 0, 0, 0));
 		jpMain.add(jpLog, BorderLayout.SOUTH);
 		jpLog.setLayout(new CardLayout(0, 0));
 
@@ -295,7 +369,6 @@ public class Paint extends JFrame {
 		jpKoordinate.add(lblKoordinate);
 
 		JPanel jpBoje = new JPanel();
-		jpBoje.setBackground(Color.MAGENTA);
 		jpBoje.setBorder(new EmptyBorder(10, 10, 10, 10));
 		jpMain.add(jpBoje, BorderLayout.EAST);
 		jpBoje.setLayout(new GridLayout(8, 1, 0, 10));
@@ -366,7 +439,7 @@ public class Paint extends JFrame {
 					case "Tacka":
 						Paint.this.linijaPrvi = true;
 						pnlPovrsina.dodajOblik(new Tacka(me.getX(), me.getY(), btnBojaOkvira.getBackground()));
-						System.out.println("Tacka jeee");
+						Paint.this.dlmLog.addElement("Dodata tacka: (" + me.getX() + ", " + me.getY() + ")");
 						break;
 					case "Linija":
 						Paint.this.lblKoordinate.setText("Napravite drugo teme linije");
@@ -375,11 +448,12 @@ public class Paint extends JFrame {
 							Paint.this.tempB = me.getY();
 							Paint.this.linijaPrvi = false;
 						} else {
-							pnlPovrsina.dodajOblik(new Linija(new Tacka(Paint.this.tempA, Paint.this.tempB),
-									new Tacka(me.getX(), me.getY()), btnBojaOkvira.getBackground()));
+							Linija tempZaLog = new Linija(new Tacka(Paint.this.tempA, Paint.this.tempB),
+									new Tacka(me.getX(), me.getY()), btnBojaOkvira.getBackground());
+							pnlPovrsina.dodajOblik(tempZaLog);
 							Paint.this.linijaPrvi = true;
+							Paint.this.dlmLog.addElement("Dodata linija: " + tempZaLog);
 						}
-						System.out.println("Kvadrat jeee");
 						break;
 					case "Kvadrat":
 						Paint.this.linijaPrvi = true;
@@ -399,7 +473,6 @@ public class Paint extends JFrame {
 							JOptionPane.showMessageDialog(null, "Morate uneti pozitivan broj!", "Greska",
 									JOptionPane.ERROR_MESSAGE);
 						}
-						System.out.println("Kvadrat jeee");
 						break;
 					case "Pravougaonik":
 						Paint.this.linijaPrvi = true;
@@ -428,7 +501,6 @@ public class Paint extends JFrame {
 										JOptionPane.ERROR_MESSAGE);
 							}
 						}
-						System.out.println("Pravougaonik jeee");
 						break;
 					case "Krug":
 						Paint.this.linijaPrvi = true;
@@ -448,7 +520,6 @@ public class Paint extends JFrame {
 							JOptionPane.showMessageDialog(null, "Morate uneti pozitivan broj!", "Greska",
 									JOptionPane.ERROR_MESSAGE);
 						}
-						System.out.println("Krug jeee");
 						break;
 					default:
 						Paint.this.linijaPrvi = true;
