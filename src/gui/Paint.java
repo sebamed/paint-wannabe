@@ -262,6 +262,17 @@ public class Paint extends JFrame {
 		jpKomande.add(btnEdituj);
 
 		btnObrisi = new JButton("Obrisi");
+		btnObrisi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Paint.this.selektovaniOblik == null) {
+					JOptionPane.showMessageDialog(Paint.this, "Morate selektovati oblik!", "Greska", JOptionPane.ERROR_MESSAGE);
+				} else {
+					pnlPovrsina.obrisiOblik(Paint.this.trenutnoSelektovan);
+					Paint.this.dlmLog.addElement("Obrisan oblik: " + Paint.this.trenutnoSelektovan + " - " + String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13));
+					Paint.this.trenutnoSelektovan = null;
+				}
+			}
+		});
 		btnObrisi.setEnabled(false);
 		btnObrisi.setPreferredSize(new Dimension(70, 40));
 		jpKomande.add(btnObrisi);
