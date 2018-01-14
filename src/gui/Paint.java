@@ -338,18 +338,18 @@ public class Paint extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent me) { // mis kliknuo levim
 				if (Paint.this.selektovanje) { // ukljucen mod za selektovanje
-					ArrayList<Oblik> pomocnaLista = pnlPovrsina.getListaOblika();
-					Collections.reverse(pomocnaLista);
+					Collections.reverse(pnlPovrsina.getListaOblika());
 					if (Paint.this.trenutnoSelektovan != null) {
 						Paint.this.trenutnoSelektovan.setSelektovan(false);
 					}
-					for (Oblik oblik : pomocnaLista) {
+					for (Oblik oblik : pnlPovrsina.getListaOblika()) {
 						if (oblik.sadrzi(me.getX(), me.getY())) {
 							oblik.setSelektovan(true);
 							Paint.this.trenutnoSelektovan = oblik;
 							break;
 						}
 					}
+					Collections.reverse(pnlPovrsina.getListaOblika());
 				} else {
 					switch (Paint.this.selektovaniOblik) {
 					case "Tacka":
