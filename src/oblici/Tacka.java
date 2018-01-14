@@ -110,5 +110,10 @@ public class Tacka extends Oblik implements Pomerljiv {
 			return false;
 		}
 	}
+	
+	@Override
+	public void crtajUBoji(Graphics g) {
+		this.crtajSe(g);
+	}
 
 }

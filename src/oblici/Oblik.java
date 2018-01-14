@@ -7,6 +7,15 @@ public abstract class Oblik implements Comparable {
 
 	private String boja;
 	private boolean selektovan;
+	private Color color;
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public Oblik() {
 
@@ -48,4 +57,5 @@ public abstract class Oblik implements Comparable {
 	public abstract void crtajSe(Graphics g);
 	public abstract void selektovan(Graphics g);
 	public abstract boolean sadrzi(int x, int y);
+	public abstract void crtajUBoji(Graphics g);
 }

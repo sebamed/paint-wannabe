@@ -1,5 +1,6 @@
 package oblici;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Krug extends PovrsinskiOblik implements Pomerljiv {
@@ -24,6 +25,12 @@ public class Krug extends PovrsinskiOblik implements Pomerljiv {
 		this(centar, poluprecnik);
 		setBoja(boja);
 		setBojaUnutrasnjosti(bojaUnutrasnjosti);
+	}
+	
+	public Krug(Tacka centar, int poluprecnik, Color color, Color colorUnutrasnjosti) {
+		this(centar, poluprecnik);
+		super.setColor(color);
+		super.setColorUnutrasnjosti(colorUnutrasnjosti);
 	}
 
 	public Tacka getCentar() {
@@ -71,7 +78,7 @@ public class Krug extends PovrsinskiOblik implements Pomerljiv {
 
 	@Override
 	public void crtajSe(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBoja()));
+		g.setColor(this.getColor());
 		g.drawOval(this.centar.getX() - this.poluprecnik, this.centar.getY() - this.poluprecnik, 2 * this.poluprecnik,
 				2 * this.poluprecnik);
 
@@ -82,7 +89,7 @@ public class Krug extends PovrsinskiOblik implements Pomerljiv {
 
 	@Override
 	public void popuni(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBojaUnutrasnjosti()));
+		g.setColor(this.getColorUnutrasnjosti());
 		g.fillOval(this.centar.getX() - this.poluprecnik, this.centar.getY() - this.poluprecnik, 2 * this.poluprecnik,
 				2 * this.poluprecnik);
 	}
@@ -109,5 +116,11 @@ public class Krug extends PovrsinskiOblik implements Pomerljiv {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void crtajUBoji(Graphics g) {
+		this.popuni(g);
+		this.crtajSe(g);
 	}
 }

@@ -1,5 +1,6 @@
 package oblici;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Linija extends Oblik implements Pomerljiv {
@@ -18,6 +19,12 @@ public class Linija extends Oblik implements Pomerljiv {
 		this.pocetna = pocetna;
 		this.krajnja = krajnja;
 		super.setBoja(boja);
+	}
+	
+	public Linija(Tacka pocetna, Tacka krajnja, Color color) {
+		this.pocetna = pocetna;
+		this.krajnja = krajnja;
+		super.setColor(color);
 	}
 
 	public Tacka getKrajnja() {
@@ -73,7 +80,7 @@ public class Linija extends Oblik implements Pomerljiv {
 
 	@Override
 	public void crtajSe(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBoja()));
+		g.setColor(this.getColor());
 		g.drawLine(this.pocetna.getX(), this.pocetna.getY(), this.krajnja.getX(), this.krajnja.getY());
 
 		if (this.isSelektovan()) {
@@ -99,6 +106,11 @@ public class Linija extends Oblik implements Pomerljiv {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void crtajUBoji(Graphics g) {
+		this.crtajSe(g);
 	}
 
 }

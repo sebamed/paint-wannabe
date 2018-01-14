@@ -1,5 +1,6 @@
 package oblici;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Pravougaonik extends Kvadrat {
@@ -24,6 +25,12 @@ public class Pravougaonik extends Kvadrat {
 		this(goreLevo, visina, sirina);
 		this.setBoja(boja);
 		this.setBojaUnutrasnjosti(bojaUnutrasnjosti);
+	}
+	
+	public Pravougaonik(Tacka goreLevo, int visina, int sirina, Color color, Color colorUnutrasnjosti) {
+		this(goreLevo, visina, sirina);
+		this.setColor(color);
+		this.setColorUnutrasnjosti(colorUnutrasnjosti);
 	}
 
 	public int getVisina() {
@@ -60,7 +67,7 @@ public class Pravougaonik extends Kvadrat {
 
 	@Override
 	public void crtajSe(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBoja()));
+		g.setColor(this.getColor());
 		g.drawRect(goreLevo.getX(), goreLevo.getY(), super.getDuzina(), this.visina);
 
 		if (this.isSelektovan()) {
@@ -70,7 +77,7 @@ public class Pravougaonik extends Kvadrat {
 
 	@Override
 	public void popuni(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBojaUnutrasnjosti()));
+		g.setColor(this.getColorUnutrasnjosti());
 		g.fillRect(goreLevo.getX(), goreLevo.getY(), super.getDuzina(), visina);
 	}
 
@@ -99,5 +106,11 @@ public class Pravougaonik extends Kvadrat {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void crtajUBoji(Graphics g) {
+		this.popuni(g);
+		this.crtajSe(g);
 	}
 }

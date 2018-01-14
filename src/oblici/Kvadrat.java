@@ -1,5 +1,6 @@
 package oblici;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
@@ -27,6 +28,13 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 		this.duzina = duzina;
 		super.setBoja(boja);
 		super.setBojaUnutrasnjosti(bojaUnutrasnjosti);
+	}
+	
+	public Kvadrat(Tacka goreLevo, int duzina, Color color, Color colorUnutrasnjosti) {
+		this.goreLevo = goreLevo;
+		this.duzina = duzina;
+		super.setColor(color);
+		super.setColorUnutrasnjosti(colorUnutrasnjosti);
 	}
 
 	public Tacka getGoreLevo() {
@@ -91,7 +99,7 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 
 	@Override
 	public void crtajSe(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBoja()));
+		g.setColor(this.getColor());
 		g.drawRect(this.goreLevo.getX(), this.goreLevo.getY(), this.duzina, this.duzina);
 
 		if (this.isSelektovan()) {
@@ -101,7 +109,7 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 
 	@Override
 	public void popuni(Graphics g) {
-		g.setColor(pronadjiBoju(this.getBojaUnutrasnjosti()));
+		g.setColor(this.getColorUnutrasnjosti());
 		g.fillRect(goreLevo.getX(), goreLevo.getY(), this.duzina, this.duzina);
 	}
 
@@ -130,6 +138,12 @@ public class Kvadrat extends PovrsinskiOblik implements Pomerljiv {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void crtajUBoji(Graphics g) {
+		this.popuni(g);
+		this.crtajSe(g);
 	}
 
 }
