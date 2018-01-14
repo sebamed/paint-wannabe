@@ -30,7 +30,7 @@ public class StackDodajObrisi extends JFrame {
 	public StackDodajObrisi() {
 		this.dfmKvadrat = new DefaultListModel<Kvadrat>();
 
-		setTitle("Stek - Dodaj/Obrisi");
+		setTitle("Stek - Dodaj/Obrisi - Sebastian Dudas IT56/2016");
 		setResizable(false);
 		getContentPane().setLayout(null);
 		this.setSize(694, 393);

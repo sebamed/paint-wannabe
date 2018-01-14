@@ -58,7 +58,7 @@ public class Paint extends JFrame {
 	public Paint() {
 		this.dlmLog = new DefaultListModel<String>();
 
-		this.setTitle("Paint wannabe");
+		this.setTitle("Paint wannabe - Sebastian Dudas IT57/16");
 
 		setBackground(Color.GRAY);
 		JPanel jpMain = new JPanel();

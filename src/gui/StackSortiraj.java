@@ -35,6 +35,7 @@ public class StackSortiraj extends JFrame {
 	private DefaultComboBoxModel<String> cboxmVrste;
 
 	public StackSortiraj() {
+		setTitle("Sortiranje - Sebastian Dudas IT57/16");
 
 		this.dfmKvadrat = new DefaultListModel<Kvadrat>();
 		this.listSortirani = new ArrayList<Kvadrat>();
