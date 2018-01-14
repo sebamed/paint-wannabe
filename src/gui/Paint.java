@@ -339,10 +339,13 @@ public class Paint extends JFrame {
 					JOptionPane.showMessageDialog(Paint.this, "Morate selektovati oblik!", "Greska",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					pnlPovrsina.obrisiOblik(Paint.this.trenutnoSelektovan);
-					Paint.this.dlmLog.addElement("Obrisan oblik: " + Paint.this.trenutnoSelektovan + " - "
-							+ String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13));
-					Paint.this.trenutnoSelektovan = null;
+					int rezultat = JOptionPane.showConfirmDialog(Paint.this, "Da li ste sigurni da zelite da obrisete oblik " + String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13) , "Upozorenje", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if(rezultat == JOptionPane.YES_OPTION) {
+						pnlPovrsina.obrisiOblik(Paint.this.trenutnoSelektovan);
+						Paint.this.dlmLog.addElement("Obrisan oblik: " + Paint.this.trenutnoSelektovan + " - "
+								+ String.valueOf(Paint.this.trenutnoSelektovan.getClass()).substring(13));
+						Paint.this.trenutnoSelektovan = null;		
+					}
 				}
 			}
 		});
