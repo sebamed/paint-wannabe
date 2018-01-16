@@ -98,7 +98,7 @@ public class StackSortiraj extends JFrame {
 		listMainStack.setBounds(10, 12, 470, 327);
 		panel.add(listMainStack);
 
-		JLabel lblTrenutnoUSteku = new JLabel("Trenutno u steku:");
+		JLabel lblTrenutnoUSteku = new JLabel("U steku:");
 		lblTrenutnoUSteku.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTrenutnoUSteku.setBounds(484, 134, 108, 32);
 		panel.add(lblTrenutnoUSteku);

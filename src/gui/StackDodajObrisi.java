@@ -83,7 +83,7 @@ public class StackDodajObrisi extends JFrame {
 		btnObrisiSaSteka.setBounds(492, 54, 173, 32);
 		jpMain.add(btnObrisiSaSteka);
 		
-		JLabel lblTrenutnoUSteku = new JLabel("Trenutno u steku:");
+		JLabel lblTrenutnoUSteku = new JLabel("U steku:");
 		lblTrenutnoUSteku.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTrenutnoUSteku.setBounds(481, 97, 108, 32);
 		jpMain.add(lblTrenutnoUSteku);

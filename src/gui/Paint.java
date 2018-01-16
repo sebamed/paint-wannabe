@@ -242,16 +242,29 @@ public class Paint extends JFrame {
 
 		ButtonGroup bgKomande = new ButtonGroup();
 
-		JToggleButton tbtnSelektuj = new JToggleButton("Selektuj");
+		JToggleButton tbtnSelektuj = new JToggleButton();
 		tbtnSelektuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Paint.this.toggleSelektovanje(true);
 			}
 		});
-		tbtnSelektuj.setPreferredSize(new Dimension(80, 40));
+		try {
+			Image img = ImageIO.read(getClass().getResource("../images/icons8-checked-50.png"));
+			tbtnSelektuj.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		tbtnSelektuj.setPreferredSize(new Dimension(60, 60));
 		jpKomande.add(tbtnSelektuj);
 
-		btnEdituj = new JButton("Edituj");
+		btnEdituj = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("../images/icons8-compose-50.png"));
+			btnEdituj.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		btnEdituj.setSize(new Dimension(60, 60));
 		btnEdituj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Paint.this.trenutnoSelektovan == null) {
@@ -329,10 +342,16 @@ public class Paint extends JFrame {
 			}
 		});
 		btnEdituj.setEnabled(false);
-		btnEdituj.setPreferredSize(new Dimension(70, 40));
+		btnEdituj.setPreferredSize(new Dimension(60, 60));
 		jpKomande.add(btnEdituj);
 
-		btnObrisi = new JButton("Obrisi");
+		btnObrisi = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("../images/icons8-delete-bin-50.png"));
+			btnObrisi.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (Paint.this.trenutnoSelektovan == null) {
@@ -350,7 +369,7 @@ public class Paint extends JFrame {
 			}
 		});
 		btnObrisi.setEnabled(false);
-		btnObrisi.setPreferredSize(new Dimension(70, 40));
+		btnObrisi.setPreferredSize(new Dimension(60, 60));
 		jpKomande.add(btnObrisi);
 
 		JPanel jpLog = new JPanel();
