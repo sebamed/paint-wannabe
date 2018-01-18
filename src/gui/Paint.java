@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -432,6 +433,12 @@ public class Paint extends JFrame {
 			@Override
 			public void mouseMoved(MouseEvent me) {
 				lblKoordinate.setText("X: " + me.getX() + " Y: " + me.getY());
+			}
+			@Override
+			public void mouseDragged(MouseEvent me) { // vuce objekat po panelu
+				if(Paint.this.trenutnoSelektovan != null && Paint.this.trenutnoSelektovan.sadrzi(me.getX(), me.getY())) {
+					
+				}
 			}
 		});
 
